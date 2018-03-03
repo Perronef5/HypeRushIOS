@@ -128,7 +128,7 @@ func setupGame() {
                 let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
                 let isEdgeTile = tileDefinition?.name
                 print(tileDefinition?.name)
-                if (isEdgeTile == "tile_00") {
+                if (isEdgeTile == "sand_tile") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
                     let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)

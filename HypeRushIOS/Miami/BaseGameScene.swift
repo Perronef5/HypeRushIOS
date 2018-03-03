@@ -131,7 +131,7 @@ class BaseGameScene: SKScene {
                 let tileDefinition = tileMap.tileDefinition(atColumn: col, row: row)
                 let isEdgeTile = tileDefinition?.name
                 print(tileDefinition?.name)
-                if (isEdgeTile == "tile_00") {
+                if (isEdgeTile == "sand_tile") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
                     let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
@@ -152,7 +152,7 @@ class BaseGameScene: SKScene {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
                     let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
-                    let tileNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "tile_50")), size: CGSize(width: 12, height: 12))
+                    let tileNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Hype_Coin")), size: CGSize(width: 12, height: 12))
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
 //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
@@ -185,7 +185,7 @@ class BaseGameScene: SKScene {
 //        bgTexture.size.height = bgTexture.siz.height + 200
 
         
-        let moveBGAnimation = SKAction.move(by: CGVector(dx: -bgTexture.size().width, dy: 0), duration: 30)
+        let moveBGAnimation = SKAction.move(by: CGVector(dx: -bgTexture.size().width, dy: 0), duration: 120)
         let shiftBGAnimation = SKAction.move(by: CGVector(dx: bgTexture.size().width, dy: 0), duration: 0)
         let moveBGForever = SKAction.repeatForever(SKAction.sequence([moveBGAnimation, shiftBGAnimation]))
         
@@ -224,7 +224,7 @@ class BaseGameScene: SKScene {
             }
         }
         
-        let hypeBeastTexture1 = SKTexture(image: #imageLiteral(resourceName: "trump_running"))
+        let hypeBeastTexture1 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running"))
         let animation = SKAction.animate(with: [hypeBeastTexture1], timePerFrame: 0.1)
         let makehypeBeastRun = SKAction.repeatForever(animation)
         

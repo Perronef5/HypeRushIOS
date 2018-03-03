@@ -47,7 +47,7 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
         if jumpCounter != 1 {
             hypeBeast.physicsBody?.isDynamic = true
             hypeBeast.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
-            hypeBeast.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 60))
+            hypeBeast.physicsBody!.applyImpulse(CGVector(dx: 0, dy: 23))
             jumpCounter += 1
         }
         
