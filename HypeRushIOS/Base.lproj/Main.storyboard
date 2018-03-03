@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ec2-j0-lq6">
+    <device id="retina4_7" orientation="landscape">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+        <array key="Minecraft Evenings.otf">
+            <string>MinecraftEvenings</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="hyk-Bo-S6C">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="Ec2-j0-lq6" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Yyr-cN-aMJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="TWs-ST-8ca" kind="relationship" relationship="rootViewController" id="aJX-0m-5iy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jrl-MD-B9g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1450" y="-184"/>
+        </scene>
+        <!--Main Menu View Controller-->
+        <scene sceneID="z1t-pr-10M">
+            <objects>
+                <viewController modalTransitionStyle="flipHorizontal" id="TWs-ST-8ca" customClass="MainMenuViewController" customModule="HypeRushIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wen-fY-9G4" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="HYPE RUSH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K8J-OT-Plj">
+                                <rect key="frame" x="198.5" y="60" width="271" height="54.5"/>
+                                <fontDescription key="fontDescription" name="MinecraftEvenings" family="Minecraft Evenings" pointSize="52"/>
+                                <color key="textColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ohc-Vb-rWS">
+                                <rect key="frame" x="303" y="165" width="61" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="PLAY">
+                                    <color key="titleColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="TWs-ST-8ca" eventType="touchUpInside" id="oSc-6G-FNp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Sg-Cz-rjw">
+                                <rect key="frame" x="142" y="165" width="81" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="STORE">
+                                    <color key="titleColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="TWs-ST-8ca" eventType="touchUpInside" id="D6B-LQ-OBl"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="URt-3H-DqK">
+                                <rect key="frame" x="444" y="165" width="196" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="LEADERBOARDS">
+                                    <color key="titleColor" red="0.98823529409999999" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonAction:" destination="TWs-ST-8ca" eventType="touchUpInside" id="Jgf-fU-bGs"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="4Sg-Cz-rjw" firstAttribute="centerY" secondItem="Ohc-Vb-rWS" secondAttribute="centerY" id="2em-rK-q2t"/>
+                            <constraint firstItem="URt-3H-DqK" firstAttribute="centerY" secondItem="Ohc-Vb-rWS" secondAttribute="centerY" id="6b6-sf-kbu"/>
+                            <constraint firstItem="K8J-OT-Plj" firstAttribute="centerX" secondItem="371-HO-zMd" secondAttribute="centerX" id="KYP-f6-NkM"/>
+                            <constraint firstItem="Ohc-Vb-rWS" firstAttribute="leading" secondItem="4Sg-Cz-rjw" secondAttribute="trailing" constant="80" id="Prb-2b-fdU"/>
+                            <constraint firstItem="Ohc-Vb-rWS" firstAttribute="centerX" secondItem="371-HO-zMd" secondAttribute="centerX" id="aCT-Fo-V3g"/>
+                            <constraint firstItem="Ohc-Vb-rWS" firstAttribute="centerY" secondItem="371-HO-zMd" secondAttribute="centerY" id="iHR-aU-8BB"/>
+                            <constraint firstItem="URt-3H-DqK" firstAttribute="leading" secondItem="Ohc-Vb-rWS" secondAttribute="trailing" constant="80" id="uGn-wP-PRx"/>
+                            <constraint firstItem="K8J-OT-Plj" firstAttribute="top" secondItem="371-HO-zMd" secondAttribute="top" constant="60" id="waE-Wp-w29"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="371-HO-zMd"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gid-bH-VFc"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6ny-u8-t1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-474.51274362818594" y="-186.40000000000001"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="sqp-JC-DHZ">
+            <objects>
+                <viewController id="BQW-Ax-IsS" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Xgp-yJ-qCs">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OuZ-tN-Jdk">
+                                <rect key="frame" x="312" y="80" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5TL-Z8-As4">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Iaa-4S-ktT"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ha1-bU-XRJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-475" y="1273"/>
+        </scene>
+        <!--World Menu View Controller-->
+        <scene sceneID="gCS-A7-woP">
+            <objects>
+                <viewController storyboardIdentifier="WorldMenuViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dCG-gv-8ao" customClass="WorldMenuViewController" customModule="HypeRushIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CS5-3v-de9">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pUH-he-E7P">
+                                <rect key="frame" x="93.5" y="127.5" width="120" height="120"/>
+                                <color key="backgroundColor" red="0.95712475740000003" green="0.231497332" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pUH-he-E7P" secondAttribute="height" multiplier="1:1" id="Clq-BX-th7"/>
+                                    <constraint firstAttribute="width" constant="120" id="XJh-JR-wor"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
+                                <state key="normal" title="World1"/>
+                                <connections>
+                                    <action selector="buttonAction:" destination="dCG-gv-8ao" eventType="touchUpInside" id="nbI-PH-b3y"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcm-gv-VNl">
+                                <rect key="frame" x="453.5" y="127.5" width="120" height="120"/>
+                                <color key="backgroundColor" red="0.18039215689999999" green="0.66743164060000004" blue="0.31065027569999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Gcm-gv-VNl" secondAttribute="height" multiplier="1:1" id="I3h-Gx-CJa"/>
+                                    <constraint firstAttribute="width" constant="120" id="bRx-fj-OF9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
+                                <state key="normal" title="World3"/>
+                                <connections>
+                                    <action selector="buttonAction:" destination="dCG-gv-8ao" eventType="touchUpInside" id="Dnu-44-9pk"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oWN-xf-vML">
+                                <rect key="frame" x="273.5" y="127.5" width="120" height="120"/>
+                                <color key="backgroundColor" red="0.94901960780000005" green="0.43529411759999997" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="oWN-xf-vML" secondAttribute="height" multiplier="1:1" id="Jrb-5s-GIF"/>
+                                    <constraint firstAttribute="width" constant="120" id="xhD-H0-r1V"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="26"/>
+                                <state key="normal" title="World2"/>
+                                <connections>
+                                    <action selector="buttonAction:" destination="dCG-gv-8ao" eventType="touchUpInside" id="bnT-rt-3mb"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.12941176469999999" green="0.12941176469999999" blue="0.12941176469999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Gcm-gv-VNl" firstAttribute="leading" secondItem="oWN-xf-vML" secondAttribute="trailing" constant="60" id="OZk-p6-DLh"/>
+                            <constraint firstItem="oWN-xf-vML" firstAttribute="centerX" secondItem="Fti-ic-vbs" secondAttribute="centerX" id="SoZ-tM-8kT"/>
+                            <constraint firstItem="Gcm-gv-VNl" firstAttribute="centerY" secondItem="oWN-xf-vML" secondAttribute="centerY" id="e7f-75-Oi2"/>
+                            <constraint firstItem="pUH-he-E7P" firstAttribute="centerY" secondItem="oWN-xf-vML" secondAttribute="centerY" id="ppl-rJ-BJm"/>
+                            <constraint firstItem="oWN-xf-vML" firstAttribute="centerY" secondItem="Fti-ic-vbs" secondAttribute="centerY" id="vfE-ef-pEs"/>
+                            <constraint firstItem="oWN-xf-vML" firstAttribute="leading" secondItem="pUH-he-E7P" secondAttribute="trailing" constant="60" id="wBe-2e-xDB"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Fti-ic-vbs"/>
+                    </view>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="world1" destination="pUH-he-E7P" id="c3g-my-No3"/>
+                        <outlet property="world2" destination="oWN-xf-vML" id="EY9-0g-bMA"/>
+                        <outlet property="world3" destination="Gcm-gv-VNl" id="7A6-Up-8fd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LT2-bp-48U" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-475.41229385307349" y="533.60000000000002"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="tXr-a1-R10">
+            <objects>
+                <viewController storyboardIdentifier="level1" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BV1-FR-VrT" customClass="GameViewController" customModule="HypeRushIOS" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3se-qz-xqx" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="4qk-I5-YsI"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="492" y="-185"/>
+        </scene>
+    </scenes>
+</document>
