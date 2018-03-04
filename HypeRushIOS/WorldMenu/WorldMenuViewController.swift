@@ -18,12 +18,20 @@ class WorldMenuViewController: UIViewController {
     @IBAction func buttonAction(_ sender: Any) {
         switch ((sender as! UIButton).tag) {
         case 0:
-            let level1 = UIStoryboard.viewControllerMain(identifier: "level1") as! GameViewController
-            self.navigationController?.present(level1, animated: false, completion: nil)
+            let miamiLevelMenuViewController = UIStoryboard.viewControllerMain(identifier: "MiamiLevelMenuViewController") as! MiamiLevelMenuViewController
+            self.navigationController?.pushViewController(miamiLevelMenuViewController, animated: false) 
             break
         case 1:
             break
         case 2:
+            break
+        case 3:
+            if let nav = self.navigationController {
+                nav.popViewController(animated: false)
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
+            
             break
         default:
             break
@@ -40,7 +48,7 @@ class WorldMenuViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
     /*
     // MARK: - Navigation

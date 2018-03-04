@@ -12,7 +12,7 @@ import AudioToolbox
 import UIKit
 import AVFoundation
 
-class BaseGameScene: SKScene {
+class BaseGameSceneTwo: SKScene {
     var currentLinearDamping: CGFloat = 0.0
     var death = false
     var portalActivated = false
@@ -26,7 +26,7 @@ class BaseGameScene: SKScene {
     var gameOverLabel = SKLabelNode(fontNamed:"Helvetica Bold")
     var highScoreLabel = SKLabelNode(fontNamed:"Helvetica Bold")
     var tapToPlayLabel = SKLabelNode(fontNamed:"Helvetica Bold")
-    var score = 0
+    var coins = UserDefaults().integer(forKey: "COINS")
     var timer = Timer()
     var gameStarted = false
     var pauseNode = SKSpriteNode()
@@ -54,6 +54,7 @@ class BaseGameScene: SKScene {
         case Wall = 16
         case Coin = 32
         case Portal = 64
+        case FinishLine = 128
     }
     
     var gameOver = false
@@ -66,7 +67,7 @@ class BaseGameScene: SKScene {
     var creationRateVariable: CGFloat = -2.0
     
     
-  
+    
     
     func setupPauseScreen() {
         
@@ -164,7 +165,7 @@ class BaseGameScene: SKScene {
                     let tileNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Hype_Coin")), size: CGSize(width: 9.446, height: 10))
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
-//                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
+                    //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
                     tileNode.alpha = 1
                     tileNode.physicsBody?.friction = 0
@@ -202,6 +203,21 @@ class BaseGameScene: SKScene {
                     tileNode.physicsBody?.categoryBitMask = ColliderType.Wall.rawValue
                     //                    tileNode.fillColor = UIColor.red
                     tileMap.addChild(tileNode)
+                } else  if (isEdgeTile == "finish_empty_tile") {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody?.isDynamic = false
+                    tileNode.alpha = 0
+                    tileNode.physicsBody?.friction = 0
+                    tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
+                    tileNode.physicsBody?.collisionBitMask = ColliderType.FinishLine.rawValue
+                    tileNode.physicsBody?.categoryBitMask = ColliderType.FinishLine.rawValue
+                    //                    tileNode.fillColor = UIColor.red
+                    tileMap.addChild(tileNode)
                 }
             }
         }
@@ -216,13 +232,13 @@ class BaseGameScene: SKScene {
         initialCameraPosition = self.camera?.position
         
         
-
+        
         
         // Collisions between RedBall GreenBall and a Wall will be detected
         
         let bgTexture = SKTexture(imageNamed: "Miami_Level1_Draft.png")
-//        bgTexture.size.height = bgTexture.siz.height + 200
-
+        //        bgTexture.size.height = bgTexture.siz.height + 200
+        
         
         let moveBGAnimation = SKAction.move(by: CGVector(dx: -bgTexture.size().width, dy: 0), duration: 120)
         let shiftBGAnimation = SKAction.move(by: CGVector(dx: bgTexture.size().width, dy: 0), duration: 0)
@@ -234,9 +250,9 @@ class BaseGameScene: SKScene {
             
             bg = SKSpriteNode(texture: bgTexture)
             
-            bg.position = CGPoint(x: bgTexture.size().width * i, y: self.frame.midY + 200)
+            bg.position = CGPoint(x: bgTexture.size().width * i, y: self.frame.midY + 400)
             
-//            bg.size.height = self.frame.height
+            //            bg.size.height = self.frame.height
             
             bg.run(moveBGForever)
             
@@ -277,7 +293,7 @@ class BaseGameScene: SKScene {
         let hypeBeastTexture2 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running2"))
         let hypeBeastTexture3 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running3"))
         let hypeBeastTexture4 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running4"))
-
+        
         let animation = SKAction.animate(with: [hypeBeastTexture1, hypeBeastTexture2, hypeBeastTexture3, hypeBeastTexture4], timePerFrame: 0.2)
         let makehypeBeastRun = SKAction.repeatForever(animation)
         
@@ -285,12 +301,12 @@ class BaseGameScene: SKScene {
         
         hypeBeast.position = CGPoint(x: -(self.frame.width/2) + 300, y: -self.frame.height / 3.5)
         
-//        hypeBeast.size = CGSize(width: 120, height: hypeBeast.frame.height)
+        //        hypeBeast.size = CGSize(width: 120, height: hypeBeast.frame.height)
         hypeBeast.run(makehypeBeastRun)
         
         hypeBeast.physicsBody = SKPhysicsBody(circleOfRadius: hypeBeastTexture1.size().height / 8)
         
-        hypeBeast.physicsBody?.isDynamic = false
+        hypeBeast.physicsBody?.isDynamic = true
         hypeBeast.physicsBody?.usesPreciseCollisionDetection = true
         hypeBeast.physicsBody?.affectedByGravity = true
         hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Object.rawValue
@@ -352,23 +368,23 @@ class BaseGameScene: SKScene {
         print("Hype beast y position \(hypeBeast.position.y)")
         print("rocxk map y position \(rockTileMapStartingPosition.y)")
         
-
+        
         if ((hypeBeast.position.y + hypeBeast.frame.height * 1.5) >= newFramePosition) {
             
             self.camera?.run(SKAction.move(to: CGPoint(x:(self.camera?.position.x)!, y:(self.camera?.position.y)! + 80), duration: 0.3))
-
             
-//            self.camera?.position.y = (self.camera?.position.y)! + 60
+            
+            //            self.camera?.position.y = (self.camera?.position.y)! + 60
             newFramePosition += 80
-//            positionChanged = true
+            //            positionChanged = true
             pauseNode.position.y = pauseNode.position.y + 80
         } else if ((hypeBeast.position.y - (hypeBeast.frame.height/2)) <=
             newFramePosition - self.frame.height) {
-
+            
             if ((self.camera?.position.y)! - 80 > (initialCameraPosition?.y)!) {
                 self.camera?.position.y = (self.camera?.position.y)! - 80
                 newFramePosition -= 80
-//               positionChanged = false
+                //               positionChanged = false
                 pauseNode.position.y = pauseNode.position.y - 80
             }
             
@@ -380,14 +396,11 @@ class BaseGameScene: SKScene {
             }
         }
     }
-//        self.camera?.position.x = hypeBeast.position.x - 100
+    //        self.camera?.position.x = hypeBeast.position.x - 100
     
-    func saveHighScore() {
-        if score > highScore {
-            print(score)
-            UserDefaults.standard.set(score, forKey: "HIGHSCORE")
-            highScore = UserDefaults().integer(forKey: "HIGHSCORE")
-        }
+    func saveCoins() {
+        UserDefaults.standard.set(coins, forKey: "COINS")
+        coins = UserDefaults().integer(forKey: "COINS")
     }
     
     func pause() {
@@ -424,8 +437,7 @@ class BaseGameScene: SKScene {
         audioPlayer?.play()
         removePauseScreen()
         gameOver = false
-        saveHighScore()
-        score = 0
+        saveCoins()
         rockTileMap.removeAllActions()
         rockTileMap.position = rockTileMapStartingPosition
         self.children.filter { $0.name != "pauseButton" && $0.name != "Rock Map Node" }.forEach { $0.removeFromParent() }
@@ -468,25 +480,55 @@ class BaseGameScene: SKScene {
         // Don't forget to remove the emitter node after the explosion
         self.run(SKAction.wait(forDuration: 1), completion: {
             if self.death == true {
-            emitterNode?.removeFromParent()
-            self.audioPlayer?.stop()
-            self.restart()
+                emitterNode?.removeFromParent()
+                self.audioPlayer?.stop()
+                self.restart()
             }
+            
+        })
+    }
+    
+    func completedMaze(pos: CGPoint) {
+        self.speed = 0
+        let emitterNode = SKEmitterNode(fileNamed: "FinishLineParticleEffect.sks")
+        emitterNode?.particlePosition = pos
+        self.addChild(emitterNode!)
+        self.audioPlayer?.pause()
+        self.audioPlayer?.prepareToPlay()
+        self.audioPlayer?.currentTime = 0
+        // Don't forget to remove the emitter node after the explosion
+        self.run(SKAction.wait(forDuration: 1), completion: {
             
         })
     }
     
     func activatePortal() {
         currentLinearDamping = (hypeBeast.physicsBody?.linearDamping)!
-        hypeBeast.physicsBody?.linearDamping = 1.10
+        hypeBeast.physicsBody?.linearDamping = 1.30
+        hypeBeast.removeAllActions()
+        let copterTexture = SKTexture(image: #imageLiteral(resourceName: "hypebeast_copter"))
+        hypeBeast.texture = copterTexture
+        hypeBeast.size.width = hypeBeast.size.width + 50
         print("PortalActivated!")
         self.portalActivated = true
     }
     
     func deactivatePortal() {
         hypeBeast.physicsBody?.linearDamping = currentLinearDamping
+        let hypeBeastTexture1 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running"))
+        let hypeBeastTexture2 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running2"))
+        let hypeBeastTexture3 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running3"))
+        let hypeBeastTexture4 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running4"))
+        
+        let animation = SKAction.animate(with: [hypeBeastTexture1, hypeBeastTexture2, hypeBeastTexture3, hypeBeastTexture4], timePerFrame: 0.2)
+        let makehypeBeastRun = SKAction.repeatForever(animation)
+        hypeBeast.texture = hypeBeastTexture1
+        hypeBeast.size.width = hypeBeast.size.width - 50
+        hypeBeast.run(makehypeBeastRun)
+        
         print("PortalActivated!")
         self.portalActivated = false
     }
-
+    
 }
+

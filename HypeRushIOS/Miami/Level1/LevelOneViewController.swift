@@ -10,17 +10,17 @@ import UIKit
 import SpriteKit
 import GameplayKit
 
-class GameViewController: UIViewController {
+class LevelOneViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Load 'GameScene.sks' as a GKScene. This provides gameplay related content
         // including entities and graphs.
-        if let scene = GKScene(fileNamed: "PortalScene") {
+        if let scene = GKScene(fileNamed: "LevelOneScene") {
             
             // Get the SKScene from the loaded GKScene
-            if let sceneNode = scene.rootNode as! GameScene? {
+            if let sceneNode = scene.rootNode as! LevelOneScene? {
                 
                 // Copy gameplay related content over to the scene
 //                sceneNode.entities = scene.entities

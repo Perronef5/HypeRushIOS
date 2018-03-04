@@ -2,7 +2,7 @@ import SpriteKit
 import GameplayKit
 import AudioToolbox
 
-class GameScene: BaseGameScene, SKPhysicsContactDelegate {
+class LevelOneScene: BaseGameScene, SKPhysicsContactDelegate {
     
    
     override func sceneDidLoad() {
@@ -23,6 +23,7 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
                 coinB.removeFromParent()
             }
             
+            self.coins += 1
         } else if contact.bodyA.categoryBitMask == ColliderType.Wall.rawValue || contact.bodyB.categoryBitMask == ColliderType.Wall.rawValue {
             self.explosion(pos: hypeBeast.position)
             self.hypeBeast.alpha = 0.0
@@ -34,7 +35,16 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
             } else {
                 self.activatePortal()
             }
+            
+            if let portal = contact.bodyA.node {
+                portal.removeFromParent()
+            } else if let portalB = contact.bodyB.node {
+                portalB.removeFromParent()
+            }
          
+        } else if contact.bodyA.categoryBitMask == ColliderType.FinishLine.rawValue || contact.bodyB.categoryBitMask == ColliderType.FinishLine.rawValue {
+            completedMaze(pos: self.hypeBeast.position)
+    
         }
         
     }
@@ -46,7 +56,7 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
         let pauseTexture = SKTexture(image: #imageLiteral(resourceName: "pause_button"))
         self.pauseNode = SKSpriteNode(texture: pauseTexture )
         
-        self.pauseNode.position = CGPoint(x: (-self.frame.width/2) + 80, y: (self.frame.height/2) - 80)
+        self.pauseNode.position = CGPoint(x: (self.frame.width/2) - 80, y: (self.frame.height/2) - 80)
         self.pauseNode.name = "pauseButton"
         self.addChild(pauseNode)
         self.playSoundTrack()
@@ -55,8 +65,11 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if self.levelCompleted {
+            self.quit()
+        }
         touchingScreen = true
-        hypeBeast.physicsBody?.isDynamic = true
+//        hypeBeast.physicsBody?.isDynamic = true
 
         if jumpCounter != 1 {
             hypeBeast.physicsBody?.isDynamic = true

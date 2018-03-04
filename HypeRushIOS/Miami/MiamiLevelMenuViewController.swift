@@ -1,43 +1,44 @@
 //
-//  MainMenuViewController.swift
+//  MiamiLevelMenuViewController.swift
 //  HypeRushIOS
 //
-//  Created by Luis F. Perrone on 3/2/18.
+//  Created by Luis F. Perrone on 3/4/18.
 //  Copyright © 2018 ThemFireLabs. All rights reserved.
 //
 
 import UIKit
-import SpriteKit
 import GameplayKit
-import GameKit
 
-class MainMenuViewController: UIViewController {
-    
-    @IBOutlet weak var coinsLabel: UILabel!
-    var coins = UserDefaults().integer(forKey: "COINS")
+class MiamiLevelMenuViewController: UIViewController {
 
     @IBAction func buttonAction(_ sender: Any) {
         switch ((sender as! UIButton).tag) {
-            case 0:
-                print("Im here!")
-                let worldMenuViewController = UIStoryboard.viewControllerMain(identifier: "WorldMenuViewController") as! WorldMenuViewController
-                self.navigationController?.pushViewController(worldMenuViewController, animated: false) 
+        case 0:
+            let level1 = UIStoryboard.viewControllerMain(identifier: "level1") as! LevelOneViewController
+            self.navigationController?.present(level1, animated: false, completion: nil)
             break
+        case 1:
+            let level2 = UIStoryboard.viewControllerMain(identifier: "level2") as! LevelTwoViewController
+            self.navigationController?.present(level2, animated: false, completion: nil)
+            break
+        case 2:
+            let level3 = UIStoryboard.viewControllerMain(identifier: "level3") as! LevelThreeViewController
+            self.navigationController?.present(level3, animated: false, completion: nil)
+            break
+        case 3:
+            if let nav = self.navigationController {
+                nav.popViewController(animated: false)
+            } else {
+                self.dismiss(animated: false, completion: nil)
+            }
             
-            case 1:
             break
-            
-            case 2:
-            break
-            default:
+        default:
             break
         }
     }
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setCoins()
         
         if let scene = GKScene(fileNamed: "MainMenuScene") {
             
@@ -65,29 +66,10 @@ class MainMenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setCoins()
-    }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    func setCoins() {
-        coins = UserDefaults().integer(forKey: "COINS")
-        coinsLabel.text = "\(coins)"
-        
-//        if GKLocalPlayer.localPlayer().isAuthenticated {
-//            let scoreReporter = GKScore(leaderboardIdentifier: "TrumpRushHS")
-//
-//            scoreReporter.value = Int64(highScore)
-//            let scoreArray: [GKScore] = [scoreReporter]
-//            GKScore.report(scoreArray, withCompletionHandler: nil)
-//        }
     }
     
 
