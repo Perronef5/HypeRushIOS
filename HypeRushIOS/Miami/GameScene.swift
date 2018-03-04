@@ -97,6 +97,7 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        print(self.hypeBeast.physicsBody?.linearDamping)
         // Called before each frame is rendered
         if self.touchingScreen &&  self.portalActivated {
             // Adjust the CGVector to suit your needs.

@@ -181,13 +181,28 @@ class BaseGameScene: SKScene {
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                     //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha = 1
+                    tileNode.alpha = 0
                     tileNode.physicsBody?.friction = 0
                     tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
                     tileNode.physicsBody?.categoryBitMask = ColliderType.Portal.rawValue
                     
                     tileMap.addChild(tileNode)
-            }
+                } else  if (isEdgeTile == "portal_tile" || isEdgeTile == "spikeUp" || isEdgeTile == "spikeDown") {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width, height: tileSize.height)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody?.isDynamic = false
+                    tileNode.alpha = 0
+                    tileNode.physicsBody?.friction = 0
+                    tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
+                    tileNode.physicsBody?.collisionBitMask = ColliderType.Wall.rawValue
+                    tileNode.physicsBody?.categoryBitMask = ColliderType.Wall.rawValue
+                    //                    tileNode.fillColor = UIColor.red
+                    tileMap.addChild(tileNode)
+                }
             }
         }
     }
@@ -404,6 +419,7 @@ class BaseGameScene: SKScene {
     }
     
     func restart() {
+        portalActivated = false
         self.audioPlayer?.currentTime = 0
         audioPlayer?.play()
         removePauseScreen()
@@ -462,6 +478,7 @@ class BaseGameScene: SKScene {
     
     func activatePortal() {
         currentLinearDamping = (hypeBeast.physicsBody?.linearDamping)!
+        hypeBeast.physicsBody?.linearDamping = 1.10
         print("PortalActivated!")
         self.portalActivated = true
     }
