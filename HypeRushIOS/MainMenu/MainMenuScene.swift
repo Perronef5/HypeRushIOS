@@ -60,9 +60,11 @@ func setupGame() {
         
         bg = SKSpriteNode(texture: bgTexture)
         
-        bg.position = CGPoint(x: bgTexture.size().width * i, y: self.frame.midY)
+        bg.position = CGPoint(x: bgTexture.size().width * i, y: self.frame.midY + 100)
         
-        //            bg.size.height = self.frame.height
+        bg.size.height = self.frame.height + 200
+//        bg.size.width = bg.size.width - 400
+
         
         bg.run(moveBGForever)
         
@@ -89,30 +91,6 @@ func setupGame() {
             rockTileMap.run(moveBGForever)
         }
     }
-    
-    let hypeBeastTexture1 = SKTexture(image: #imageLiteral(resourceName: "trump_running"))
-    let animation = SKAction.animate(with: [hypeBeastTexture1], timePerFrame: 0.1)
-    let makehypeBeastRun = SKAction.repeatForever(animation)
-    
-    hypeBeast = SKSpriteNode(texture: hypeBeastTexture1)
-    
-    hypeBeast.position = CGPoint(x: -(self.frame.width/2) + 300, y: -self.frame.height / 3.5)
-    
-    //        hypeBeast.size = CGSize(width: 120, height: hypeBeast.frame.height)
-    hypeBeast.run(makehypeBeastRun)
-    
-    hypeBeast.physicsBody = SKPhysicsBody(circleOfRadius: hypeBeastTexture1.size().height / 8)
-    
-    hypeBeast.physicsBody?.isDynamic = true
-    hypeBeast.physicsBody?.usesPreciseCollisionDetection = true
-    
-    hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Object.rawValue
-    hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Gap.rawValue | ColliderType.Coin.rawValue
-    hypeBeast.physicsBody!.categoryBitMask = ColliderType.HypeBeast.rawValue
-    hypeBeast.physicsBody!.collisionBitMask = ColliderType.Ground.rawValue | ColliderType.Wall.rawValue
-    hypeBeast.physicsBody?.allowsRotation = false
-    
-    self.addChild(hypeBeast)
 
 }
     

@@ -25,6 +25,10 @@
 		9D80CEC4203C99E7000EC670 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9D80CEC2203C99E7000EC670 /* LaunchScreen.storyboard */; };
 		9D80CECF203C99E7000EC670 /* HypeRushIOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80CECE203C99E7000EC670 /* HypeRushIOSTests.swift */; };
 		9D80CEDA203C99E7000EC670 /* HypeRushIOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D80CED9203C99E7000EC670 /* HypeRushIOSUITests.swift */; };
+		9DCA1BD0204B414700B2178D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA1BCE204B414700B2178D /* Assets.xcassets */; };
+		9DCA1BD4204B4B5700B2178D /* ExplosionParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA1BD3204B4B5700B2178D /* ExplosionParticle.sks */; };
+		9DCA1BD7204B545500B2178D /* TrapThot_Final.wav in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA1BD6204B545500B2178D /* TrapThot_Final.wav */; };
+		9DCA1BD9204B6C2900B2178D /* Scene2.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9DCA1BD8204B6C2900B2178D /* Scene2.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +73,10 @@
 		9D80CED5203C99E7000EC670 /* HypeRushIOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HypeRushIOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D80CED9203C99E7000EC670 /* HypeRushIOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeRushIOSUITests.swift; sourceTree = "<group>"; };
 		9D80CEDB203C99E7000EC670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9DCA1BCE204B414700B2178D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9DCA1BD3204B4B5700B2178D /* ExplosionParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ExplosionParticle.sks; sourceTree = "<group>"; };
+		9DCA1BD6204B545500B2178D /* TrapThot_Final.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = TrapThot_Final.wav; sourceTree = "<group>"; };
+		9DCA1BD8204B6C2900B2178D /* Scene2.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Scene2.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				9D80CEBB203C99E7000EC670 /* GameViewController.swift */,
+				9DCA1BD8204B6C2900B2178D /* Scene2.sks */,
 				9D7501C0204A814200A0D065 /* PortalScene.sks */,
 				9D80CEB9203C99E7000EC670 /* GameScene.swift */,
 				9D204DE82048814C009C5825 /* GameScene.sks */,
@@ -145,6 +154,7 @@
 		9D80CEA7203C99E7000EC670 = {
 			isa = PBXGroup;
 			children = (
+				9DCA1BC8204B407800B2178D /* Resources */,
 				9D7501C2204A850F00A0D065 /* Fonts */,
 				9D80CEB2203C99E7000EC670 /* HypeRushIOS */,
 				9D80CECD203C99E7000EC670 /* HypeRushIOSTests */,
@@ -196,6 +206,24 @@
 				9D80CEDB203C99E7000EC670 /* Info.plist */,
 			);
 			path = HypeRushIOSUITests;
+			sourceTree = "<group>";
+		};
+		9DCA1BC8204B407800B2178D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9DCA1BD5204B542B00B2178D /* Sounds */,
+				9DCA1BCE204B414700B2178D /* Assets.xcassets */,
+				9DCA1BD3204B4B5700B2178D /* ExplosionParticle.sks */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9DCA1BD5204B542B00B2178D /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				9DCA1BD6204B545500B2178D /* TrapThot_Final.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -306,10 +334,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D7501C5204A900F00A0D065 /* MainMenuScene.sks in Resources */,
+				9DCA1BD9204B6C2900B2178D /* Scene2.sks in Resources */,
 				9D7501C8204AF75B00A0D065 /* Minecraft Evenings.otf in Resources */,
+				9DCA1BD0204B414700B2178D /* Assets.xcassets in Resources */,
 				9D80CEBF203C99E7000EC670 /* Main.storyboard in Resources */,
 				9D204DE92048814C009C5825 /* GameScene.sks in Resources */,
 				9D7501C1204A814200A0D065 /* PortalScene.sks in Resources */,
+				9DCA1BD4204B4B5700B2178D /* ExplosionParticle.sks in Resources */,
+				9DCA1BD7204B545500B2178D /* TrapThot_Final.wav in Resources */,
 				9D80CEC1203C99E7000EC670 /* Assets.xcassets in Resources */,
 				9D7501BF204A811F00A0D065 /* HRTiles.sks in Resources */,
 				9D80CEC4203C99E7000EC670 /* LaunchScreen.storyboard in Resources */,

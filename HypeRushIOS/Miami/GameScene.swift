@@ -23,6 +23,18 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
                 coinB.removeFromParent()
             }
             
+        } else if contact.bodyA.categoryBitMask == ColliderType.Wall.rawValue || contact.bodyB.categoryBitMask == ColliderType.Wall.rawValue {
+            self.explosion(pos: hypeBeast.position)
+            self.hypeBeast.alpha = 0.0
+            
+        } else if contact.bodyA.categoryBitMask == ColliderType.Portal.rawValue || contact.bodyB.categoryBitMask == ColliderType.Portal.rawValue {
+            
+            if portalActivated {
+                self.deactivatePortal()
+            } else {
+                self.activatePortal()
+            }
+         
         }
         
     }
@@ -37,13 +49,15 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
         self.pauseNode.position = CGPoint(x: (-self.frame.width/2) + 80, y: (self.frame.height/2) - 80)
         self.pauseNode.name = "pauseButton"
         self.addChild(pauseNode)
+        self.playSoundTrack()
         self.setupGame()
         
     }
     
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
+        touchingScreen = true
+        hypeBeast.physicsBody?.isDynamic = true
+
         if jumpCounter != 1 {
             hypeBeast.physicsBody?.isDynamic = true
             hypeBeast.physicsBody!.velocity = CGVector(dx: 0, dy: 0)
@@ -74,8 +88,20 @@ class GameScene: BaseGameScene, SKPhysicsContactDelegate {
         
     }
     
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchingScreen = false
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchingScreen = false
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
+        if self.touchingScreen &&  self.portalActivated {
+            // Adjust the CGVector to suit your needs.
+            hypeBeast.physicsBody!.applyImpulse(CGVector(dx: 0.0, dy: 2))
+        } 
     }
     
  
