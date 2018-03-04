@@ -177,7 +177,7 @@ class BaseGameScene: SKScene {
                 } else if (isEdgeTile == "portal") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
-                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 2, height: tileSize.height * 2)
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 3, height: tileSize.height * 3)
                     let tileNode = SKShapeNode(rect: rect)
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))

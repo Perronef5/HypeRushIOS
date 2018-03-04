@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9D204DE92048814C009C5825 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D204DE82048814C009C5825 /* GameScene.sks */; };
 		9D219A0A204BDCA000AC2A15 /* MiamiLevelMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D219A09204BDCA000AC2A15 /* MiamiLevelMenuViewController.swift */; };
 		9D219A0E204BF4A400AC2A15 /* FinishLineParticleEffect.sks in Resources */ = {isa = PBXBuildFile; fileRef = 9D219A0D204BF4A400AC2A15 /* FinishLineParticleEffect.sks */; };
 		9D219A13204BF97000AC2A15 /* LevelTwoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D219A0F204BF97000AC2A15 /* LevelTwoViewController.swift */; };
@@ -58,7 +57,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		9D204DE82048814C009C5825 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		9D219A09204BDCA000AC2A15 /* MiamiLevelMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiamiLevelMenuViewController.swift; sourceTree = "<group>"; };
 		9D219A0D204BF4A400AC2A15 /* FinishLineParticleEffect.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FinishLineParticleEffect.sks; sourceTree = "<group>"; };
 		9D219A0F204BF97000AC2A15 /* LevelTwoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelTwoViewController.swift; sourceTree = "<group>"; };
@@ -83,7 +81,7 @@
 		9D80CEB9203C99E7000EC670 /* LevelOneScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneScene.swift; sourceTree = "<group>"; };
 		9D80CEBB203C99E7000EC670 /* LevelOneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelOneViewController.swift; sourceTree = "<group>"; };
 		9D80CEBE203C99E7000EC670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		9D80CEC0203C99E7000EC670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9D80CEC0203C99E7000EC670 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../HypeRushIOS/Assets.xcassets; sourceTree = "<group>"; };
 		9D80CEC3203C99E7000EC670 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9D80CEC5203C99E7000EC670 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9D80CECA203C99E7000EC670 /* HypeRushIOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HypeRushIOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,7 +138,6 @@
 				9D80CEB9203C99E7000EC670 /* LevelOneScene.swift */,
 				9D80CEBB203C99E7000EC670 /* LevelOneViewController.swift */,
 				9D7501C0204A814200A0D065 /* LevelOneScene.sks */,
-				9D204DE82048814C009C5825 /* GameScene.sks */,
 			);
 			path = Level1;
 			sourceTree = "<group>";
@@ -154,6 +151,15 @@
 				9D219A17204C159300AC2A15 /* Scene3.sks */,
 			);
 			path = Level3;
+			sourceTree = "<group>";
+		};
+		9D219A1F204C35E800AC2A15 /* Effects */ = {
+			isa = PBXGroup;
+			children = (
+				9DCA1BD3204B4B5700B2178D /* ExplosionParticle.sks */,
+				9D219A0D204BF4A400AC2A15 /* FinishLineParticleEffect.sks */,
+			);
+			path = Effects;
 			sourceTree = "<group>";
 		};
 		9D7501BA204A55B600A0D065 /* MainMenu */ = {
@@ -188,24 +194,16 @@
 		9D7501CA204AF80300A0D065 /* WorldMenu */ = {
 			isa = PBXGroup;
 			children = (
-				9D7501CD204AF84100A0D065 /* Slides */,
 				9D7501CB204AF83A00A0D065 /* WorldMenuViewController.swift */,
 			);
 			path = WorldMenu;
 			sourceTree = "<group>";
 		};
-		9D7501CD204AF84100A0D065 /* Slides */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Slides;
-			sourceTree = "<group>";
-		};
 		9D80CEA7203C99E7000EC670 = {
 			isa = PBXGroup;
 			children = (
+				9D80CEB3203C99E7000EC670 /* AppDelegate.swift */,
 				9DCA1BC8204B407800B2178D /* Resources */,
-				9D7501C2204A850F00A0D065 /* Fonts */,
 				9D80CEB2203C99E7000EC670 /* HypeRushIOS */,
 				9D80CECD203C99E7000EC670 /* HypeRushIOSTests */,
 				9D80CED8203C99E7000EC670 /* HypeRushIOSUITests */,
@@ -230,10 +228,6 @@
 				9D7501BA204A55B600A0D065 /* MainMenu */,
 				9D7501CA204AF80300A0D065 /* WorldMenu */,
 				9D7501BD204A583300A0D065 /* Miami */,
-				9D80CEB3203C99E7000EC670 /* AppDelegate.swift */,
-				9D80CEB7203C99E7000EC670 /* Actions.sks */,
-				9D7501BE204A811F00A0D065 /* HRTiles.sks */,
-				9D80CEC0203C99E7000EC670 /* Assets.xcassets */,
 				9D80CEC2203C99E7000EC670 /* LaunchScreen.storyboard */,
 				9D80CEC5203C99E7000EC670 /* Info.plist */,
 			);
@@ -261,10 +255,13 @@
 		9DCA1BC8204B407800B2178D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9DCA1BD5204B542B00B2178D /* Sounds */,
 				9DCA1BCE204B414700B2178D /* Assets.xcassets */,
-				9DCA1BD3204B4B5700B2178D /* ExplosionParticle.sks */,
-				9D219A0D204BF4A400AC2A15 /* FinishLineParticleEffect.sks */,
+				9D80CEC0203C99E7000EC670 /* Assets.xcassets */,
+				9D80CEB7203C99E7000EC670 /* Actions.sks */,
+				9D7501BE204A811F00A0D065 /* HRTiles.sks */,
+				9D7501C2204A850F00A0D065 /* Fonts */,
+				9DCA1BD5204B542B00B2178D /* Sounds */,
+				9D219A1F204C35E800AC2A15 /* Effects */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -388,7 +385,6 @@
 				9D7501C8204AF75B00A0D065 /* Minecraft Evenings.otf in Resources */,
 				9DCA1BD0204B414700B2178D /* Assets.xcassets in Resources */,
 				9D80CEBF203C99E7000EC670 /* Main.storyboard in Resources */,
-				9D204DE92048814C009C5825 /* GameScene.sks in Resources */,
 				9D7501C1204A814200A0D065 /* LevelOneScene.sks in Resources */,
 				9DCA1BD4204B4B5700B2178D /* ExplosionParticle.sks in Resources */,
 				9DCA1BD7204B545500B2178D /* TrapThot_Final.wav in Resources */,

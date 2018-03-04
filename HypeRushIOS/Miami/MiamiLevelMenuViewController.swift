@@ -12,6 +12,9 @@ import GameplayKit
 class MiamiLevelMenuViewController: UIViewController {
 
     @IBAction func buttonAction(_ sender: Any) {
+        let skView = self.view as! SKView
+        skView.presentScene(nil)
+        
         switch ((sender as! UIButton).tag) {
         case 0:
             let level1 = UIStoryboard.viewControllerMain(identifier: "level1") as! LevelOneViewController
@@ -70,6 +73,37 @@ class MiamiLevelMenuViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let skView = self.view as! SKView
+        if skView.scene == nil {
+            if let scene = GKScene(fileNamed: "MainMenuScene") {
+                
+                // Get the SKScene from the loaded GKScene
+                if let sceneNode = scene.rootNode as! MainMenuScene? {
+                    
+                    // Copy gameplay related content over to the scene
+                    //                sceneNode.entities = scene.entities
+                    //                sceneNode.graphs = scene.graphs
+                    
+                    // Set the scale mode to scale to fit the window
+                    sceneNode.scaleMode = .aspectFill
+                    sceneNode.alpha = 0.9
+                    // Present the scene
+                    if let view = self.view as! SKView? {
+                        view.presentScene(sceneNode)
+                        
+                        view.ignoresSiblingOrder = true
+                        
+                        view.showsFPS = true
+                        view.showsNodeCount = true
+                    }
+                }
+            }
+        }
     }
     
 

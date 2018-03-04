@@ -20,6 +20,8 @@ class MainMenuViewController: UIViewController {
         switch ((sender as! UIButton).tag) {
             case 0:
                 print("Im here!")
+                 let skView = self.view as! SKView
+                skView.presentScene(nil)
                 let worldMenuViewController = UIStoryboard.viewControllerMain(identifier: "WorldMenuViewController") as! WorldMenuViewController
                 self.navigationController?.pushViewController(worldMenuViewController, animated: false) 
             break
@@ -65,12 +67,6 @@ class MainMenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
-    
-    
-    override func viewWillAppear(_ animated: Bool) {
-        setCoins()
-    }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -90,6 +86,38 @@ class MainMenuViewController: UIViewController {
 //        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        setCoins()
+
+        let skView = self.view as! SKView
+        if skView.scene == nil {
+            if let scene = GKScene(fileNamed: "MainMenuScene") {
+                
+                // Get the SKScene from the loaded GKScene
+                if let sceneNode = scene.rootNode as! MainMenuScene? {
+                    
+                    // Copy gameplay related content over to the scene
+                    //                sceneNode.entities = scene.entities
+                    //                sceneNode.graphs = scene.graphs
+                    
+                    // Set the scale mode to scale to fit the window
+                    sceneNode.scaleMode = .aspectFill
+                    sceneNode.alpha = 0.9
+                    // Present the scene
+                    if let view = self.view as! SKView? {
+                        view.presentScene(sceneNode)
+                        
+                        view.ignoresSiblingOrder = true
+                        
+                        view.showsFPS = true
+                        view.showsNodeCount = true
+                    }
+                }
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation

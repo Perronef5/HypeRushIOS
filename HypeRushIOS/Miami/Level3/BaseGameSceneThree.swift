@@ -20,6 +20,7 @@ class BaseGameSceneThree: SKScene {
     var touchingScreen = false
     var newFramePosition: CGFloat = 0.0
     var initialCameraPosition: CGPoint?
+    var intialPauseButtonPosition: CGPoint?
     var audioPlayer: AVAudioPlayer?
     var audioPlayerTime = 0.0
     var hypeBeast = SKSpriteNode()
@@ -177,13 +178,13 @@ class BaseGameSceneThree: SKScene {
                 } else if (isEdgeTile == "portal") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
-                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 2, height: tileSize.height * 2)
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 3, height: tileSize.height * 3)
                     let tileNode = SKShapeNode(rect: rect)
-                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.position = CGPoint(x: x, y: y - 20)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
                     //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha = 0
+                    tileNode.alpha = 1
                     tileNode.physicsBody?.friction = 0
                     tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
                     tileNode.physicsBody?.categoryBitMask = ColliderType.Portal.rawValue
@@ -231,6 +232,8 @@ class BaseGameSceneThree: SKScene {
         self.camera = cam
         self.addChild(cam!)
         initialCameraPosition = self.camera?.position
+        intialPauseButtonPosition = self.pauseNode.position
+
         
         
         
@@ -393,7 +396,7 @@ class BaseGameSceneThree: SKScene {
                 let difference = Double((self.camera?.position.y)!) - Double((initialCameraPosition?.y)!)
                 self.camera?.position.y = (initialCameraPosition?.y)!
                 newFramePosition -= CGFloat(difference)
-                pauseNode.position.y = pauseNode.position.y - CGFloat(difference)
+                pauseNode.position.y = intialPauseButtonPosition?.y
             }
         }
     }
