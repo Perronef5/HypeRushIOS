@@ -27,7 +27,7 @@ class LevelOneViewController: UIViewController {
 //                sceneNode.graphs = scene.graphs
                 
                 // Set the scale mode to scale to fit the window
-                sceneNode.scaleMode = .aspectFill
+                sceneNode.scaleMode = .aspectFit
                 
                 // Present the scene
                 if let view = self.view as! SKView? {

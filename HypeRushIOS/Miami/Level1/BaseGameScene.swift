@@ -15,11 +15,13 @@ import AVFoundation
 class BaseGameScene: SKScene {
     var levelCompleted = false
     var currentLinearDamping: CGFloat = 0.0
+    var firstTime = false
     var death = false
     var portalActivated = false
     var touchingScreen = false
     var newFramePosition: CGFloat = 0.0
     var initialCameraPosition: CGPoint?
+    var intialPauseButtonPosition: CGPoint?
     var audioPlayer: AVAudioPlayer?
     var audioPlayerTime = 0.0
     var hypeBeast = SKSpriteNode()
@@ -56,6 +58,7 @@ class BaseGameScene: SKScene {
         case Coin = 32
         case Portal = 64
         case FinishLine = 128
+        case PortalExit = 256
     }
     
     var gameOver = false
@@ -68,7 +71,7 @@ class BaseGameScene: SKScene {
     var creationRateVariable: CGFloat = -2.0
     
     
-  
+    
     
     func setupPauseScreen() {
         
@@ -166,7 +169,7 @@ class BaseGameScene: SKScene {
                     let tileNode = SKSpriteNode(texture: SKTexture(image: #imageLiteral(resourceName: "Hype_Coin")), size: CGSize(width: 9.446, height: 10))
                     tileNode.position = CGPoint(x: x, y: y)
                     tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
-//                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
+                    //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
                     tileNode.alpha = 1
                     tileNode.physicsBody?.friction = 0
@@ -177,16 +180,31 @@ class BaseGameScene: SKScene {
                 } else if (isEdgeTile == "portal") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
-                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 3, height: tileSize.height * 3)
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 4, height: tileSize.height * 4)
                     let tileNode = SKShapeNode(rect: rect)
                     tileNode.position = CGPoint(x: x, y: y)
-                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize.width * 4, height: tileSize.height * 4) , center: CGPoint(x: tileSize.width + 10, y: tileSize.height / 2.0))
                     //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
                     tileNode.alpha = 0
-                    tileNode.physicsBody?.friction = 0
+                    tileNode.physicsBody?.friction = 1
                     tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
                     tileNode.physicsBody?.categoryBitMask = ColliderType.Portal.rawValue
+                    
+                    tileMap.addChild(tileNode)
+                } else if (isEdgeTile == "portalexit") {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 4, height: tileSize.height * 4)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize.width * 4, height: tileSize.height * 4) , center: CGPoint(x: tileSize.width + 10, y: tileSize.height / 2.0))
+                    //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
+                    tileNode.physicsBody?.isDynamic = false
+                    tileNode.alpha = 0
+                    tileNode.physicsBody?.friction = 1
+                    tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
+                    tileNode.physicsBody?.categoryBitMask = ColliderType.PortalExit.rawValue
                     
                     tileMap.addChild(tileNode)
                 } else  if (isEdgeTile == "portal_tile" || isEdgeTile == "spikeUp" || isEdgeTile == "spikeDown") {
@@ -222,6 +240,8 @@ class BaseGameScene: SKScene {
                 }
             }
         }
+        
+        
     }
     
     func setupGame() {
@@ -231,15 +251,17 @@ class BaseGameScene: SKScene {
         self.camera = cam
         self.addChild(cam!)
         initialCameraPosition = self.camera?.position
+        intialPauseButtonPosition = self.pauseNode.position
         
         
-
+        
+        
         
         // Collisions between RedBall GreenBall and a Wall will be detected
         
         let bgTexture = SKTexture(imageNamed: "Miami_Level1_Draft.png")
-//        bgTexture.size.height = bgTexture.siz.height + 200
-
+        //        bgTexture.size.height = bgTexture.siz.height + 200
+        
         
         let moveBGAnimation = SKAction.move(by: CGVector(dx: -bgTexture.size().width, dy: 0), duration: 120)
         let shiftBGAnimation = SKAction.move(by: CGVector(dx: bgTexture.size().width, dy: 0), duration: 0)
@@ -253,7 +275,7 @@ class BaseGameScene: SKScene {
             
             bg.position = CGPoint(x: bgTexture.size().width * i, y: self.frame.midY + 400)
             
-//            bg.size.height = self.frame.height
+            //            bg.size.height = self.frame.height
             
             bg.run(moveBGForever)
             
@@ -294,7 +316,7 @@ class BaseGameScene: SKScene {
         let hypeBeastTexture2 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running2"))
         let hypeBeastTexture3 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running3"))
         let hypeBeastTexture4 = SKTexture(image: #imageLiteral(resourceName: "hypebeast_running4"))
-
+        
         let animation = SKAction.animate(with: [hypeBeastTexture1, hypeBeastTexture2, hypeBeastTexture3, hypeBeastTexture4], timePerFrame: 0.2)
         let makehypeBeastRun = SKAction.repeatForever(animation)
         
@@ -302,55 +324,33 @@ class BaseGameScene: SKScene {
         
         hypeBeast.position = CGPoint(x: -(self.frame.width/2) + 300, y: -self.frame.height / 3.5)
         
-//        hypeBeast.size = CGSize(width: 120, height: hypeBeast.frame.height)
+        //        hypeBeast.size = CGSize(width: 120, height: hypeBeast.frame.height)
         hypeBeast.run(makehypeBeastRun)
         
         hypeBeast.physicsBody = SKPhysicsBody(circleOfRadius: hypeBeastTexture1.size().height / 8)
         
-        hypeBeast.physicsBody?.isDynamic = true
+        if !firstTime {
+            hypeBeast.physicsBody?.isDynamic = false
+            firstTime = true
+        } else {
+            hypeBeast.physicsBody?.isDynamic = true
+        }
         hypeBeast.physicsBody?.usesPreciseCollisionDetection = true
         hypeBeast.physicsBody?.affectedByGravity = true
         hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Object.rawValue
-        hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Gap.rawValue | ColliderType.Coin.rawValue | ColliderType.Portal.rawValue
+        hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Gap.rawValue | ColliderType.Coin.rawValue | ColliderType.Portal.rawValue | ColliderType.FinishLine.rawValue
         hypeBeast.physicsBody!.categoryBitMask = ColliderType.HypeBeast.rawValue
         hypeBeast.physicsBody!.collisionBitMask = ColliderType.Ground.rawValue | ColliderType.Wall.rawValue
         hypeBeast.physicsBody?.allowsRotation = false
         
         self.addChild(hypeBeast)
-        
-        // Right wall
-        //        node = [SKNode node];
-        //        node.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(CGRectGetWidth(self.frame) - 1.0f, 0.0f, 1.0f, CGRectGetHeight(self.view.frame))];
-        //        [self addChild:node];
-        
-        let ground = SKSpriteNode()
-        ground.color = UIColor.red
-        ground.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: self.frame.width, height: 10))
-        ground.physicsBody?.categoryBitMask = ColliderType.Ground.rawValue
-        
-        ground.position = CGPoint(x: 0, y: (-self.frame.height / 3.5) - 40)
-        
-        //        let ground = SKNode()
-        //
-        //        ground.position = CGPoint(x: self.frame.midX, y: -self.frame.height / 2.28)
-        //
-        //        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.width, height: 1))
-        //
-        //        ground.physicsBody!.isDynamic = false
-        //
-        //        ground.physicsBody!.contactTestBitMask = ColliderType.hypeBeast.rawValue
-        //        //        ground.physicsBody!.categoryBitMask = ColliderType.Ground.rawValue
-        //        ground.physicsBody!.collisionBitMask = ColliderType.hypeBeast.rawValue
-        
-        
-        //        self.addChild(ground)
-        
+
         //        scoreLabel.fontName = "6809-chargen"
-//        scoreLabel.fontSize = 60
-//        scoreLabel.text = "Attempt 1"
-//        scoreLabel.position = CGPoint(x: self.frame.midX, y: self.frame.height / 2 - 100)
-//        scoreLabel.fontColor = UIColor.black
-//        self.addChild(scoreLabel)
+        //        scoreLabel.fontSize = 60
+        //        scoreLabel.text = "Attempt 1"
+        //        scoreLabel.position = CGPoint(x: self.frame.midX, y: self.frame.height / 2 - 100)
+        //        scoreLabel.fontColor = UIColor.black
+        //        self.addChild(scoreLabel)
         
         if firstRound == true {
             tapToPlayLabel.fontSize = 36
@@ -369,23 +369,23 @@ class BaseGameScene: SKScene {
         print("Hype beast y position \(hypeBeast.position.y)")
         print("rocxk map y position \(rockTileMapStartingPosition.y)")
         
-
+        
         if ((hypeBeast.position.y + hypeBeast.frame.height * 1.5) >= newFramePosition) {
             
             self.camera?.run(SKAction.move(to: CGPoint(x:(self.camera?.position.x)!, y:(self.camera?.position.y)! + 80), duration: 0.3))
-
             
-//            self.camera?.position.y = (self.camera?.position.y)! + 60
+            
+            //            self.camera?.position.y = (self.camera?.position.y)! + 60
             newFramePosition += 80
-//            positionChanged = true
+            //            positionChanged = true
             pauseNode.position.y = pauseNode.position.y + 80
         } else if ((hypeBeast.position.y - (hypeBeast.frame.height/2)) <=
             newFramePosition - self.frame.height) {
-
+            
             if ((self.camera?.position.y)! - 80 > (initialCameraPosition?.y)!) {
                 self.camera?.position.y = (self.camera?.position.y)! - 80
                 newFramePosition -= 80
-//               positionChanged = false
+                //               positionChanged = false
                 pauseNode.position.y = pauseNode.position.y - 80
             }
             
@@ -393,15 +393,15 @@ class BaseGameScene: SKScene {
                 let difference = Double((self.camera?.position.y)!) - Double((initialCameraPosition?.y)!)
                 self.camera?.position.y = (initialCameraPosition?.y)!
                 newFramePosition -= CGFloat(difference)
-                pauseNode.position.y = pauseNode.position.y - CGFloat(difference)
+                pauseNode.position.y = (intialPauseButtonPosition?.y)!
             }
         }
     }
-//        self.camera?.position.x = hypeBeast.position.x - 100
+    //        self.camera?.position.x = hypeBeast.position.x - 100
     
     func saveCoins() {
-            UserDefaults.standard.set(coins, forKey: "COINS")
-            coins = UserDefaults().integer(forKey: "COINS")
+        UserDefaults.standard.set(coins, forKey: "COINS")
+        coins = UserDefaults().integer(forKey: "COINS")
     }
     
     func pause() {
@@ -433,6 +433,7 @@ class BaseGameScene: SKScene {
     }
     
     func restart() {
+        pauseNode.position.y = (intialPauseButtonPosition?.y)!
         portalActivated = false
         self.audioPlayer?.currentTime = 0
         audioPlayer?.play()
@@ -444,7 +445,6 @@ class BaseGameScene: SKScene {
         self.children.filter { $0.name != "pauseButton" && $0.name != "Rock Map Node" }.forEach { $0.removeFromParent() }
         setupGame()
         self.speed = 1
-        hypeBeast.physicsBody?.isDynamic = true
         pauseButtonTouched = false
         resumeClicked = true
     }
@@ -481,9 +481,9 @@ class BaseGameScene: SKScene {
         // Don't forget to remove the emitter node after the explosion
         self.run(SKAction.wait(forDuration: 1), completion: {
             if self.death == true {
-            emitterNode?.removeFromParent()
-            self.audioPlayer?.stop()
-            self.restart()
+                emitterNode?.removeFromParent()
+                self.audioPlayer?.stop()
+                self.restart()
             }
             
         })
@@ -528,7 +528,7 @@ class BaseGameScene: SKScene {
         hypeBeast.texture = hypeBeastTexture1
         hypeBeast.size.width = hypeBeast.size.width - 50
         hypeBeast.run(makehypeBeastRun)
-
+        
         print("PortalActivated!")
         self.portalActivated = false
     }
@@ -540,25 +540,27 @@ class BaseGameScene: SKScene {
         finishBox.position = CGPoint(x: 0.0, y: 0.0)
         finishBox.name = "finishBox"
         
-//
-//        let restartLabel = SKLabelNode(fontNamed:"Helvetica Bold")
-//        restartLabel.fontSize = 36
-//        restartLabel.text = "RESTART"
-//        restartLabel.position = CGPoint(x: 0, y: (restartButton.frame.height/2) - (restartLabel.frame.height/2) - 70)
-//        restartLabel.name = "restartLabel"
-//
+        //
+        //        let restartLabel = SKLabelNode(fontNamed:"Helvetica Bold")
+        //        restartLabel.fontSize = 36
+        //        restartLabel.text = "RESTART"
+        //        restartLabel.position = CGPoint(x: 0, y: (restartButton.frame.height/2) - (restartLabel.frame.height/2) - 70)
+        //        restartLabel.name = "restartLabel"
+        //
         
-//        let finishMazeframe = SKShapeNode(rect: self.frame)
-//        //        restartButton.fillColor = UIColor.black
-//        finishMazeframe.name = "finishMaze"
+        //        let finishMazeframe = SKShapeNode(rect: self.frame)
+        //        //        restartButton.fillColor = UIColor.black
+        //        finishMazeframe.name = "finishMaze"
         
-//        restartButton.addChild(restartLabel)
+        //        restartButton.addChild(restartLabel)
         self.addChild(finishBox)
         
-//        self.addChild(finishMazeframe)
-//        finishMazeframe.zPosition = 1.0
+        //        self.addChild(finishMazeframe)
+        //        finishMazeframe.zPosition = 1.0
         hypeBeast.zPosition = 0.0
-   
+        
     }
-
+    
 }
+
+

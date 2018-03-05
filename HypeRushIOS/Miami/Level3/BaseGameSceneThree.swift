@@ -15,6 +15,7 @@ import AVFoundation
 class BaseGameSceneThree: SKScene {
     var levelCompleted = false
     var currentLinearDamping: CGFloat = 0.0
+    var firstTime = false
     var death = false
     var portalActivated = false
     var touchingScreen = false
@@ -57,6 +58,7 @@ class BaseGameSceneThree: SKScene {
         case Coin = 32
         case Portal = 64
         case FinishLine = 128
+        case PortalExit = 256
     }
     
     var gameOver = false
@@ -178,16 +180,31 @@ class BaseGameSceneThree: SKScene {
                 } else if (isEdgeTile == "portal") {
                     let x = CGFloat(col) * tileSize.width - halfWidth
                     let y = CGFloat(row) * tileSize.height - halfHeight
-                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 3, height: tileSize.height * 3)
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 4, height: tileSize.height * 4)
                     let tileNode = SKShapeNode(rect: rect)
-                    tileNode.position = CGPoint(x: x, y: y - 20)
-                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: tileSize, center: CGPoint(x: tileSize.width / 2.0, y: tileSize.height / 2.0))
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize.width * 4, height: tileSize.height * 4) , center: CGPoint(x: tileSize.width + 10, y: tileSize.height / 2.0))
                     //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
                     tileNode.physicsBody?.isDynamic = false
-                    tileNode.alpha = 1
-                    tileNode.physicsBody?.friction = 0
+                    tileNode.alpha = 0
+                    tileNode.physicsBody?.friction = 1
                     tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
                     tileNode.physicsBody?.categoryBitMask = ColliderType.Portal.rawValue
+                    
+                    tileMap.addChild(tileNode)
+                } else if (isEdgeTile == "portalexit") {
+                    let x = CGFloat(col) * tileSize.width - halfWidth
+                    let y = CGFloat(row) * tileSize.height - halfHeight
+                    let rect = CGRect(x: 0, y: 0, width: tileSize.width * 4, height: tileSize.height * 4)
+                    let tileNode = SKShapeNode(rect: rect)
+                    tileNode.position = CGPoint(x: x, y: y)
+                    tileNode.physicsBody = SKPhysicsBody.init(rectangleOf: CGSize(width: tileSize.width * 4, height: tileSize.height * 4) , center: CGPoint(x: tileSize.width + 10, y: tileSize.height / 2.0))
+                    //                    tileNode.fillTexture = SKTexture(image: #imageLiteral(resourceName: "tile_50"))
+                    tileNode.physicsBody?.isDynamic = false
+                    tileNode.alpha = 0
+                    tileNode.physicsBody?.friction = 1
+                    tileNode.physicsBody?.contactTestBitMask = ColliderType.HypeBeast.rawValue
+                    tileNode.physicsBody?.categoryBitMask = ColliderType.PortalExit.rawValue
                     
                     tileMap.addChild(tileNode)
                 } else  if (isEdgeTile == "portal_tile" || isEdgeTile == "spikeUp" || isEdgeTile == "spikeDown") {
@@ -223,6 +240,8 @@ class BaseGameSceneThree: SKScene {
                 }
             }
         }
+        
+        
     }
     
     func setupGame() {
@@ -233,7 +252,7 @@ class BaseGameSceneThree: SKScene {
         self.addChild(cam!)
         initialCameraPosition = self.camera?.position
         intialPauseButtonPosition = self.pauseNode.position
-
+        
         
         
         
@@ -310,43 +329,21 @@ class BaseGameSceneThree: SKScene {
         
         hypeBeast.physicsBody = SKPhysicsBody(circleOfRadius: hypeBeastTexture1.size().height / 8)
         
-        hypeBeast.physicsBody?.isDynamic = true
+        if !firstTime {
+            hypeBeast.physicsBody?.isDynamic = false
+            firstTime = true
+        } else {
+            hypeBeast.physicsBody?.isDynamic = true
+        }
         hypeBeast.physicsBody?.usesPreciseCollisionDetection = true
         hypeBeast.physicsBody?.affectedByGravity = true
         hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Object.rawValue
-        hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Gap.rawValue | ColliderType.Coin.rawValue | ColliderType.Portal.rawValue
+        hypeBeast.physicsBody!.contactTestBitMask = ColliderType.Gap.rawValue | ColliderType.Coin.rawValue | ColliderType.Portal.rawValue | ColliderType.FinishLine.rawValue
         hypeBeast.physicsBody!.categoryBitMask = ColliderType.HypeBeast.rawValue
         hypeBeast.physicsBody!.collisionBitMask = ColliderType.Ground.rawValue | ColliderType.Wall.rawValue
         hypeBeast.physicsBody?.allowsRotation = false
         
         self.addChild(hypeBeast)
-        
-        // Right wall
-        //        node = [SKNode node];
-        //        node.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:CGRectMake(CGRectGetWidth(self.frame) - 1.0f, 0.0f, 1.0f, CGRectGetHeight(self.view.frame))];
-        //        [self addChild:node];
-        
-        let ground = SKSpriteNode()
-        ground.color = UIColor.red
-        ground.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: self.frame.width, height: 10))
-        ground.physicsBody?.categoryBitMask = ColliderType.Ground.rawValue
-        
-        ground.position = CGPoint(x: 0, y: (-self.frame.height / 3.5) - 40)
-        
-        //        let ground = SKNode()
-        //
-        //        ground.position = CGPoint(x: self.frame.midX, y: -self.frame.height / 2.28)
-        //
-        //        ground.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: self.frame.width, height: 1))
-        //
-        //        ground.physicsBody!.isDynamic = false
-        //
-        //        ground.physicsBody!.contactTestBitMask = ColliderType.hypeBeast.rawValue
-        //        //        ground.physicsBody!.categoryBitMask = ColliderType.Ground.rawValue
-        //        ground.physicsBody!.collisionBitMask = ColliderType.hypeBeast.rawValue
-        
-        
-        //        self.addChild(ground)
         
         //        scoreLabel.fontName = "6809-chargen"
         //        scoreLabel.fontSize = 60
@@ -396,7 +393,7 @@ class BaseGameSceneThree: SKScene {
                 let difference = Double((self.camera?.position.y)!) - Double((initialCameraPosition?.y)!)
                 self.camera?.position.y = (initialCameraPosition?.y)!
                 newFramePosition -= CGFloat(difference)
-                pauseNode.position.y = intialPauseButtonPosition?.y
+                pauseNode.position.y = (intialPauseButtonPosition?.y)!
             }
         }
     }
@@ -436,6 +433,7 @@ class BaseGameSceneThree: SKScene {
     }
     
     func restart() {
+        pauseNode.position.y = (intialPauseButtonPosition?.y)!
         portalActivated = false
         self.audioPlayer?.currentTime = 0
         audioPlayer?.play()
@@ -447,7 +445,6 @@ class BaseGameSceneThree: SKScene {
         self.children.filter { $0.name != "pauseButton" && $0.name != "Rock Map Node" }.forEach { $0.removeFromParent() }
         setupGame()
         self.speed = 1
-        hypeBeast.physicsBody?.isDynamic = true
         pauseButtonTouched = false
         resumeClicked = true
     }
@@ -565,4 +562,5 @@ class BaseGameSceneThree: SKScene {
     }
     
 }
+
 

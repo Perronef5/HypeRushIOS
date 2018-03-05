@@ -30,17 +30,26 @@ class GameSceneTwo: BaseGameScene, SKPhysicsContactDelegate {
             
         } else if contact.bodyA.categoryBitMask == ColliderType.Portal.rawValue || contact.bodyB.categoryBitMask == ColliderType.Portal.rawValue {
             
-            if portalActivated {
-                self.deactivatePortal()
-            } else {
-                self.activatePortal()
-            }
             
-            if let portal = contact.bodyA.node {
-                portal.removeFromParent()
-            } else if let portalB = contact.bodyB.node {
-                portalB.removeFromParent()
-            }
+            self.activatePortal()
+            
+            
+            //            if let portal = contact.bodyA.node {
+            //                portal.removeFromParent()
+            //            } else if let portalB = contact.bodyB.node {
+            //                portalB.removeFromParent()
+            //            }
+            
+        }  else if contact.bodyA.categoryBitMask == ColliderType.PortalExit.rawValue || contact.bodyB.categoryBitMask == ColliderType.PortalExit.rawValue {
+            
+            self.deactivatePortal()
+            
+            
+            //            if let portal = contact.bodyA.node {
+            //                portal.removeFromParent()
+            //            } else if let portalB = contact.bodyB.node {
+            //                portalB.removeFromParent()
+            //            }
             
         } else if contact.bodyA.categoryBitMask == ColliderType.FinishLine.rawValue || contact.bodyB.categoryBitMask == ColliderType.FinishLine.rawValue {
             completedMaze(pos: self.hypeBeast.position)
@@ -61,6 +70,8 @@ class GameSceneTwo: BaseGameScene, SKPhysicsContactDelegate {
         self.addChild(pauseNode)
         self.playSoundTrack()
         self.setupGame()
+        hypeBeast.physicsBody?.isDynamic = true
+        
         
     }
     
