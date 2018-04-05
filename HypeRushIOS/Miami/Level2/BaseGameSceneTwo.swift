@@ -287,14 +287,16 @@ class BaseGameSceneTwo: SKScene {
         }
         
         var parentNodeWidth: CGFloat = 0.0
-        
         var frameWidth: CGFloat = 0.0
+        
         for node in self.children {
             parentNodeWidth += node.frame.width
             if node.name == "Rock Map Node" {
                 rockTileMap = node as? SKTileMapNode
                 frameWidth = rockTileMap.frame.width
-                tileMapPhysics(name: rockTileMap)
+                if !firstTime {
+                    tileMapPhysics(name: rockTileMap)
+                }
                 rockTileMapStartingPosition = rockTileMap.position
                 let moveBGAnimation = SKAction.move(by: CGVector(dx: -Int(rockTileMap.frame.width), dy: 0), duration: 110)
                 let shiftBGAnimation = SKAction.move(by: CGVector(dx: rockTileMap.frame.width, dy: 0), duration: 0)

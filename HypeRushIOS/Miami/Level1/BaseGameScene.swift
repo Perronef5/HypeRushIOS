@@ -40,6 +40,7 @@ class BaseGameScene: SKScene {
     var firstRound = true
     var currentTheme = UserDefaults().integer(forKey: "THEMENUMBER")
     var rockTileMap: SKTileMapNode!
+    var backgroundTileMap: SKTileMapNode!
     var waterTileMap: SKTileMapNode!
     var groundTileSet: SKTileSet!
     var resumeClicked = false
@@ -250,8 +251,11 @@ class BaseGameScene: SKScene {
         cam = SKCameraNode()
         self.camera = cam
         self.addChild(cam!)
+        self.camera?.position = CGPoint(x: (self.camera?.position.x)!, y: self.hypeBeast.position.y)
         initialCameraPosition = self.camera?.position
         intialPauseButtonPosition = self.pauseNode.position
+        let zoomInAction = SKAction.scale(to: 0.9, duration: 0)
+        cam?.run(zoomInAction)
         
         
         
@@ -287,20 +291,29 @@ class BaseGameScene: SKScene {
         }
         
         var parentNodeWidth: CGFloat = 0.0
-        
         var frameWidth: CGFloat = 0.0
+        
         for node in self.children {
             parentNodeWidth += node.frame.width
             if node.name == "Rock Map Node" {
                 rockTileMap = node as? SKTileMapNode
                 frameWidth = rockTileMap.frame.width
-                tileMapPhysics(name: rockTileMap)
+                if !firstTime {
+                    tileMapPhysics(name: rockTileMap)
+                }
                 rockTileMapStartingPosition = rockTileMap.position
                 let moveBGAnimation = SKAction.move(by: CGVector(dx: -Int(rockTileMap.frame.width), dy: 0), duration: 110)
                 let shiftBGAnimation = SKAction.move(by: CGVector(dx: rockTileMap.frame.width, dy: 0), duration: 0)
                 let moveBGForever = SKAction.repeatForever(SKAction.sequence([moveBGAnimation]))
                 
                 rockTileMap.run(moveBGForever)
+            } else if node.name == "BackgroundMapNode" {
+                backgroundTileMap = node as? SKTileMapNode
+                frameWidth = backgroundTileMap.frame.width
+                let moveBGAnimation = SKAction.move(by: CGVector(dx: -Int(backgroundTileMap.frame.width), dy: 0), duration: 110)
+                let moveBGForever = SKAction.repeatForever(SKAction.sequence([moveBGAnimation]))
+                
+                backgroundTileMap.run(moveBGForever)
             }
         }
         
@@ -368,34 +381,36 @@ class BaseGameScene: SKScene {
     override func didFinishUpdate() {
         print("Hype beast y position \(hypeBeast.position.y)")
         print("rocxk map y position \(rockTileMapStartingPosition.y)")
+        self.camera?.position = CGPoint(x: (self.camera?.position.x)!, y: self.hypeBeast.position.y)
+        pauseNode.position = CGPoint(x:(self.camera?.position.x)! + (self.frame.width/2) - 120, y: (self.camera?.position.y)! + (self.frame.height/2) - 100)
         
-        
-        if ((hypeBeast.position.y + hypeBeast.frame.height * 1.5) >= newFramePosition) {
-            
-            self.camera?.run(SKAction.move(to: CGPoint(x:(self.camera?.position.x)!, y:(self.camera?.position.y)! + 80), duration: 0.3))
-            
-            
-            //            self.camera?.position.y = (self.camera?.position.y)! + 60
-            newFramePosition += 80
-            //            positionChanged = true
-            pauseNode.position.y = pauseNode.position.y + 80
-        } else if ((hypeBeast.position.y - (hypeBeast.frame.height/2)) <=
-            newFramePosition - self.frame.height) {
-            
-            if ((self.camera?.position.y)! - 80 > (initialCameraPosition?.y)!) {
-                self.camera?.position.y = (self.camera?.position.y)! - 80
-                newFramePosition -= 80
-                //               positionChanged = false
-                pauseNode.position.y = pauseNode.position.y - 80
-            }
-            
-            if (((self.camera?.position.y)! - 80) <= (initialCameraPosition?.y)! ) {
-                let difference = Double((self.camera?.position.y)!) - Double((initialCameraPosition?.y)!)
-                self.camera?.position.y = (initialCameraPosition?.y)!
-                newFramePosition -= CGFloat(difference)
-                pauseNode.position.y = (intialPauseButtonPosition?.y)!
-            }
-        }
+        // move camera if hype beast is moving out of screem
+//        if ((hypeBeast.position.y + hypeBeast.frame.height * 1.5) >= newFramePosition) {
+//
+//            self.camera?.run(SKAction.move(to: CGPoint(x:(self.camera?.position.x)!, y:(self.camera?.position.y)! + 80), duration: 0.3))
+//
+//
+//            //            self.camera?.position.y = (self.camera?.position.y)! + 60
+//            newFramePosition += 80
+//            //            positionChanged = true
+//            pauseNode.position.y = pauseNode.position.y + 80
+//        } else if ((hypeBeast.position.y - (hypeBeast.frame.height/2)) <=
+//            newFramePosition - self.frame.height) {
+//
+//            if ((self.camera?.position.y)! - 80 > (initialCameraPosition?.y)!) {
+//                self.camera?.position.y = (self.camera?.position.y)! - 80
+//                newFramePosition -= 80
+//                //               positionChanged = false
+//                pauseNode.position.y = pauseNode.position.y - 80
+//            }
+//
+//            if (((self.camera?.position.y)! - 80) <= (initialCameraPosition?.y)! ) {
+//                let difference = Double((self.camera?.position.y)!) - Double((initialCameraPosition?.y)!)
+//                self.camera?.position.y = (initialCameraPosition?.y)!
+//                newFramePosition -= CGFloat(difference)
+//                pauseNode.position.y = (intialPauseButtonPosition?.y)!
+//            }
+//        }
     }
     //        self.camera?.position.x = hypeBeast.position.x - 100
     
